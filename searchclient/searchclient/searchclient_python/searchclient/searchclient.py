@@ -20,17 +20,26 @@ class SearchClient:
                 print('Error, client does not support colors.', file=sys.stderr, flush=True)
                 sys.exit(1)
             
+            #add all lines to an array to know how many rows we have
+            lines =[]
+            longestLine=0;
+            while line:
+                lines.append(line)
+                if len(line)>longestLine:
+                    longestLine=len(line)
+                line = server_messages.readline().rstrip()
+                
             #Set max size of states based on input
-            State.MAX_COL=len(line)
-            State.MAX_ROW=35 #TODO find a way to know how many rows we have
-            
+            State.MAX_COL=longestLine
+            State.MAX_ROW=len(lines)
+
             # Read lines for level.
             self.initial_state = State()
             
+            #import pdb; pdb.set_trace()
             
-            
-            row = 0
-            while line:
+            #print(len(lines))
+            for row, line in enumerate(lines):
                 for col, char in enumerate(line):
                     if char == '+': self.initial_state.walls[row][col] = True
                     elif char in "0123456789":
@@ -47,8 +56,6 @@ class SearchClient:
                     else:
                         print('Error, read invalid level character: {}'.format(char), file=sys.stderr, flush=True)
                         sys.exit(1)
-                row += 1
-                line = server_messages.readline().rstrip()
                 
             
             
