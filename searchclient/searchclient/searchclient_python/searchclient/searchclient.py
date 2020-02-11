@@ -20,8 +20,15 @@ class SearchClient:
                 print('Error, client does not support colors.', file=sys.stderr, flush=True)
                 sys.exit(1)
             
+            #Set max size of states based on input
+            State.MAX_COL=len(line)
+            State.MAX_ROW=35 #TODO find a way to know how many rows we have
+            
             # Read lines for level.
             self.initial_state = State()
+            
+            
+            
             row = 0
             while line:
                 for col, char in enumerate(line):
@@ -42,6 +49,9 @@ class SearchClient:
                         sys.exit(1)
                 row += 1
                 line = server_messages.readline().rstrip()
+                
+            
+            
         except Exception as ex:
             print('Error parsing level: {}.'.format(repr(ex)), file=sys.stderr, flush=True)
             sys.exit(1)
