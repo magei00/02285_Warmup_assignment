@@ -7,6 +7,8 @@ class State:
     _RNG = random.Random(1)
     MAX_ROW = 70
     MAX_COL = 70
+    walls =[]
+    goals =[]
     
     def __init__(self, copy: 'State' = None):
         '''
@@ -30,9 +32,9 @@ class State:
             self.agent_row = None
             self.agent_col = None
             
-            self.walls = [[False for _ in range(State.MAX_COL)] for _ in range(State.MAX_ROW)]
+            State.walls = [[False for _ in range(State.MAX_COL)] for _ in range(State.MAX_ROW)]
             self.boxes = [[None for _ in range(State.MAX_COL)] for _ in range(State.MAX_ROW)]
-            self.goals = [[None for _ in range(State.MAX_COL)] for _ in range(State.MAX_ROW)]
+            State.goals = [[None for _ in range(State.MAX_COL)] for _ in range(State.MAX_ROW)]
             
             self.parent = None
             self.action = None
@@ -42,9 +44,9 @@ class State:
             self.agent_row = copy.agent_row
             self.agent_col = copy.agent_col
             
-            self.walls = [row[:] for row in copy.walls]
+            #self.walls = [row[:] for row in copy.walls]
             self.boxes = [row[:] for row in copy.boxes]
-            self.goals = [row[:] for row in copy.goals]
+            #self.goals = [row[:] for row in copy.goals]
             
             self.parent = copy.parent
             self.action = copy.action
