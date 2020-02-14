@@ -7,7 +7,49 @@ class Heuristic(metaclass=ABCMeta):
         pass
     
     def h(self, state: 'State') -> 'int':
-        raise NotImplementedError
+        
+        def manDistFromBoxToGoal():
+            h=0
+            for rowBox in range(state.MAX_ROW):
+                for colBox in range(state.MAX_COL):
+                    box = state.boxes[rowBox][colBox]
+                    if box != None :
+                        bestManDist = float('inf')
+                        for rowGoal in range(state.MAX_ROW):
+                            for colGoal in range(state.MAX_COL):
+                                goal = state.goals[rowGoal][colGoal]
+                                if goal!=None and box.lower() == goal :
+                                    newManDist = abs(rowBox-rowGoal) + abs(colBox-colGoal)
+                                    bestManDist = min(bestManDist,newManDist)
+                                    
+                        h+=bestManDist
+            return h
+        #-----------------------------------------
+        def manDistFromGoalToBox():
+            h=0
+            for rowGoal in range(state.MAX_ROW):
+                for colGoal in range(state.MAX_COL):
+                    goal = state.goals[rowGoal][colGoal]
+                    if goal != None :
+                        bestManDist = float('inf')
+                        for rowBox in range(state.MAX_ROW):
+                            for colBox in range(state.MAX_COL):
+                                box = state.boxes[rowBox][colBox]
+                                if box!=None and box.lower() == goal :
+                                    newManDist = abs(rowBox-rowGoal) + abs(colBox-colGoal)
+                                    bestManDist = min(bestManDist,newManDist)
+                                    
+                        h+=bestManDist
+            return h
+        #-----------------------------------------
+        
+        #Manhatten distance of all boxes to nearest goal
+        
+        h= manDistFromBoxToGoal()    
+        #h=manDistFromGoalToBox()            
+        return h
+    
+        
     
     @abstractmethod
     def f(self, state: 'State') -> 'int': pass

@@ -40,6 +40,7 @@ class State:
             self.action = None
             
             self.g = 0
+            self.h = -1
         else:
             self.agent_row = copy.agent_row
             self.agent_col = copy.agent_col
@@ -52,6 +53,7 @@ class State:
             self.action = copy.action
             
             self.g = copy.g
+            self.h = copy.h
     
     def get_children(self) -> '[State, ...]':
         '''
